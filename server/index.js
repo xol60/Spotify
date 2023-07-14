@@ -19,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/v1/auth', router.authRouter)
 app.use('/v1/user', router.userRouter)
+app.use('/v1/admin', router.adminRouter)
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

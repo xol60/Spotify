@@ -2,7 +2,7 @@ import express from 'express'
 const router = express.Router()
 import User, { validate } from "../models/user.js";
 import bcrypt from "bcrypt";
-
+import { authentication } from '../utils/auth.js';
 
 router.post("/create", async (req, res) => {
     const { error } = validate(req.body);
@@ -27,6 +27,17 @@ router.post("/create", async (req, res) => {
         .status(200)
         .send({ message: "Account created successfully" });
 });
+router.get("/", authentication, async (req, res) => {
+    const user = await User.findById(req.user._id).select("-password -__v -isAdmin");
+    res.status(200).send({ data: user });
+});
 
-
+router.put("/:id", authentication, async (req, res) => {
+    const user = await User.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+    ).select("-password -__v");
+    res.status(200).send({ data: user, message: "Profile updated successfully" });
+});
 export { router as userRouter }
