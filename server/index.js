@@ -21,6 +21,7 @@ app.use('/v1/auth', router.authRouter)
 app.use('/v1/user', router.userRouter)
 app.use('/v1/admin', router.adminRouter)
 app.use('/v1/song', router.songRouter)
+app.use('/v1/playlist', router.playlistRouter)
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
