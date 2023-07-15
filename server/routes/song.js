@@ -21,12 +21,13 @@ router.get("/admin/list", isAdmin, async (req, res) => {
 
 
 router.put("/user/like/:id", authentication, async (req, res) => {
-    let resMessage = "";
+
     const song = await Song.findById(req.params.id);
     if (!song) return res.status(400).send({ message: "song does not exist" });
 
     const user = await User.findById(req.user._id);
     const index = user.likedSongs.indexOf(song._id);
+    let resMessage = "";
     if (index === -1) {
         user.likedSongs.push(song._id);
         resMessage = "Added to your liked songs";

@@ -7,7 +7,7 @@ import { authentication, isAdmin } from '../utils/auth.js';
 import Joi from 'joi'
 
 
-router.post("/public-playlist", isAdmin, async (req, res) => {
+router.post("/public/playlist", isAdmin, async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send({ message: error.details[0].message });
     const playList = await PlayList({ ...req.body, public: true }).save();
@@ -68,6 +68,5 @@ router.put("/public/remove-song", isAdmin, async (req, res) => {
     await playlist.save();
     res.status(200).send({ data: playlist, message: "Removed from playlist" });
 });
-
 
 export { router as playlistRouter }
